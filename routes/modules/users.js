@@ -60,12 +60,13 @@ router.post('/signup', async (req, res) => {
         }
         
         // check if username is valid
+        /*
         const existing_user = await User.find({ username })
         if (existing_user) {
             message.message = 'username has already been taken'
             res.status(400).json(message)
         }
-        
+        */
         // hash password
         const salt = bcrypt.genSaltSync(10)
         const hash = bcrypt.hashSync(password, salt)

@@ -25,7 +25,7 @@ router.post('/login', async (req, res) => {
         // get user from database
         const user = await User.findOne({ username })
         if (!user) {
-            consoel.log('f2')
+            console.log('f2')
             message.message = 'user not found'
             return res.status(400).json(message)
         }

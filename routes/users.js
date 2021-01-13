@@ -40,6 +40,7 @@ router.post('/login', async (req, res) => {
         // create token
         message.token = jwt.sign({ username, role }, secret, { expiresIn: '1d' })
         message.mesage = 'login succeeded'
+        message.user = user
         res.status(200).json(message)
         
     } catch (err) {

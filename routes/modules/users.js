@@ -17,6 +17,7 @@ router.post('/login', async (req, res) => {
 
         // check empty fields
         if (!username || !password) {
+            console.log('f1')
             message.message = 'required fields are missing'
             return res.status(400).json(message)
         }
@@ -24,6 +25,7 @@ router.post('/login', async (req, res) => {
         // get user from database
         const user = await User.findOne({ username })
         if (!user) {
+            consoel.log('f2')
             message.message = 'user not found'
             return res.status(400).json(message)
         }
@@ -32,6 +34,7 @@ router.post('/login', async (req, res) => {
         // check password
         const match = await bcrypt.compareSync(password, user.password)
         if (!match) {
+            console.log('f3')
             message.message = 'incorrect password'
             return res.status(400).json(message)
         }

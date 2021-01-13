@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 
-const User = require('../../models/user')
+const User = require('../models/user')
 const secret = process.env.SECRET_KEY
 
 // endpoint logs in a user based on data in body

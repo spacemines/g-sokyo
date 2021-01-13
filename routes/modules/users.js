@@ -11,6 +11,9 @@ router.post('/login', async (req, res) => {
     try {
         message = {}
         const { username, password } = req.body
+        
+        // console log request body
+        console.log(req.body)
 
         // check empty fields
         if (!username || !password) {

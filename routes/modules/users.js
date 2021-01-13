@@ -17,7 +17,6 @@ router.post('/login', async (req, res) => {
 
         // check empty fields
         if (!username || !password) {
-            console.log('f1')
             message.message = 'required fields are missing'
             return res.status(400).json(message)
         }
@@ -25,7 +24,6 @@ router.post('/login', async (req, res) => {
         // get user from database
         const user = await User.findOne({ username })
         if (!user) {
-            console.log('f2')
             message.message = 'user not found'
             return res.status(400).json(message)
         }
@@ -34,7 +32,6 @@ router.post('/login', async (req, res) => {
         // check password
         const match = await bcrypt.compareSync(password, user.password)
         if (!match) {
-            console.log('f3')
             message.message = 'incorrect password'
             return res.status(400).json(message)
         }
@@ -64,6 +61,7 @@ router.post('/signup', async (req, res) => {
             message.message = 'required fields are missing'
             res.status(400).json(message)
         }
+        console.log(message)
         
         // check if username is valid
         const existing_user = await User.findOne({ username })
@@ -71,6 +69,7 @@ router.post('/signup', async (req, res) => {
             message.message = 'username has already been taken'
             res.status(400).json(message)
         }
+        console.log(message)
         
         // hash password
         const salt = bcrypt.genSaltSync(10)

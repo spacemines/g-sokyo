@@ -11,6 +11,7 @@ const secret = process.env.SECRET_KEY
 router.post('/', async (req, res) => {
     try {
         message = {}
+        console.log(req.headers)
         const token = req.headers.authorization.split(' ')[1]
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload
@@ -159,8 +160,6 @@ router.get('/', async (req, res) => {
         console.log('error', err)
         res.status(400).end()
     }
-
-
 })
 
 module.exports = router

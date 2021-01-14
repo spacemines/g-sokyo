@@ -82,7 +82,6 @@ router.post('/signup', async (req, res) => {
             password: hash
         })
 
-        message.token = jwt.sign({ username }, secret, { expiresIn: '1d' })
         message.message = 'sign up succeeded'
         return res.status(200).json(message) 
     } catch (err) {

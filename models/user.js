@@ -21,7 +21,7 @@ const userSchema = new Schema({
         enum: ['admin', 'restricted'],
         default: 'restricted',
         required: false
-    }
+    },
     cart: {
         type: Map,
         of: Number,

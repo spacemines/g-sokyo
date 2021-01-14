@@ -3,9 +3,10 @@ const { exec } = require('child_process')
 
 const router = express.Router()
 
-// endpoint logs in a user based on data in body
+// endpoint sends back heroku logs
 router.get('/', (req, res) => {
     exec('heroku logs', (error, stdout, stderr) => {
+        console.log('stdout', stdout)
         res.send(stdout)
     })
 })

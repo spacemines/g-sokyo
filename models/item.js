@@ -13,6 +13,7 @@ const itemSchema = new Schema({
     },
     desciption: {
         type: String,
+        default: ''
     },
     category: {
         type: String,
@@ -20,7 +21,8 @@ const itemSchema = new Schema({
         default: 'unclassified'
     },
     picture: {
-        type: String
+        type: String,
+        default: ''
     }
 })
 

@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
 
         // create token
         message.token = jwt.sign({ username, role }, secret, { expiresIn: '1d' })
-        message.mesage = 'login succeeded'
+        message.message = 'login succeeded'
         message.user = user
         res.status(200).json(message)
         
@@ -53,13 +53,13 @@ router.post('/login', async (req, res) => {
 router.post('/signup', async (req, res) => {
     try {
         message = {}
-        const { username, email, password, confirm_password } = req.body
+        const { username, email, password } = req.body
         
         // console log the payload
         console.log(req.body)
 
         // check empty fields
-        if (!username || !email || !password || !confirm_password) {
+        if (!username || !email || !password) {
             message.message = 'required fields are missing'
             res.status(400).json(message)
         }
@@ -87,6 +87,55 @@ router.post('/signup', async (req, res) => {
         message.token = jwt.sign({ username }, secret, { expiresIn: '1d' })
         message.message = 'sign up succeeded'
         return res.status(200).json(message) 
+    } catch (err) {
+        console.log('error', err)
+        res.status(400).end()
+    }
+})
+
+router.post('/:id/cart-items', async (req, res) => {
+    try {
+        message = {}
+        const token = req.headers.authorization.split(' ')[1]
+        const payload = jwt.verify(token, process.env.SECRET_KEY)
+        const { username, role } = payload
+
+        // console log payload and request body
+        console.log('payload', payload)
+        console.log('request body', req.body)
+
+        // check valid jwt username match
+        if (req.body.username && req.body.username !== username) {
+            message.message = 'invalid username'
+            return res.status(400).json(message)
+        }
+
+        // check admin status
+        if (role != 'admin') {
+            message.message = 'admin role required'
+            return res.status(400).json(message)
+        }
+
+        // check jwt expiration
+        if (Date.now() / 1000 > payload.exp) {
+            message.message = 'token expired'
+            return res.status(400).json(message)
+        }
+
+        const user_id = req.params.id
+
+        // console log user id
+        console.log('user id', user_id)
+
+        // make sure user exists
+        const user = User.findById(user_id)
+        if (!user) {
+            message.message = 'user not found'
+            return res.status(400).json(message)
+        }
+
+        // process item and quantity
+        // add it to user's cart
     } catch (err) {
         console.log('error', err)
         res.status(400).end()

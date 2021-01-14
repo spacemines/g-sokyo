@@ -99,13 +99,13 @@ router.delete('/:id', async (req, res) => {
             return res.status(400).json(message)
         }
 
-        const id = req.params.id
+        const item_id = req.params.id
         
         // console log id
-        console.log('id', id)
+        console.log('item id', item_id)
 
         // find item and delete
-        const item = await Item.findByIdAndRemove(id, req.body)
+        const item = await Item.findByIdAndRemove(item_id, req.body)
         if (!item) {
             message.message = 'item id not found'
             return res.status(400).json(message)

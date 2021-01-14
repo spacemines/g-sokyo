@@ -11,7 +11,8 @@ const secret = process.env.SECRET_KEY
 router.post('/', async (req, res) => {
     try {
         message = {}
-        console.log(req.headers)
+        console.log('request headers', req.headers)
+        console.log('authorization', req.headers.authorization)
         const token = req.headers.authorization.split(' ')[1]
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload
@@ -125,6 +126,7 @@ router.delete('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         message = {}
+        console.log('request headers', req.headers)
         const token = req.headers.authorization.split(' ')[1]
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload

@@ -22,6 +22,11 @@ const userSchema = new Schema({
         default: 'restricted',
         required: false
     }
+    cart: {
+        type: Map,
+        of: Number,
+        default: {}
+    }
 })
 
 module.exports = mongoose.model('User', userSchema)

@@ -14,7 +14,7 @@ router.post('/login', async (req, res) => {
         const { username, password } = req.body
         
         // console log request body
-        console.log(req.body)
+        console.log('request body', req.body)
 
         // check empty fields
         if (!username || !password) {
@@ -56,14 +56,13 @@ router.post('/signup', async (req, res) => {
         const { username, email, password } = req.body
         
         // console log the payload
-        console.log(req.body)
+        console.log('request body', req.body)
 
         // check empty fields
         if (!username || !email || !password) {
             message.message = 'required fields are missing'
             res.status(400).json(message)
         }
-        console.log(message)
         
         // check if username is valid
         const existing_user = await User.findOne({ username })
@@ -71,7 +70,6 @@ router.post('/signup', async (req, res) => {
             message.message = 'username has already been taken'
             res.status(400).json(message)
         }
-        console.log(message)
         
         // hash password
         const salt = bcrypt.genSaltSync(10)

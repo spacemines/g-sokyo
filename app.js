@@ -6,6 +6,7 @@ if (process.env.NODE_ENV == 'development') {
     const dotenv = require('dotenv').config()
 }
 
+require('dotenv/config')
 require('./config/mongoose')
 
 const routes = require('./routes')

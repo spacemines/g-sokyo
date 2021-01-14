@@ -13,7 +13,6 @@ router.post('/login', async (req, res) => {
         message = {}
         const { username, password } = req.body
         
-        // console log request body
         console.log('request body', req.body)
 
         // check empty fields

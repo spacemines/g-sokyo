@@ -17,8 +17,8 @@ const itemSchema = new Schema({
     },
     category: {
         type: String,
-        enum: ['book', 'movies', 'music', 'unclassified'],
-        default: 'unclassified'
+        enum: ['book', 'movies', 'music', 'object', 'misc'],
+        default: 'misc'
     },
     picture: {
         type: String,

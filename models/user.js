@@ -1,21 +1,6 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const cartItemSchema = new Schema({
-    price: {
-        type: Number,
-        required: true,
-    },
-    description: {
-        type: String,
-        required: true,
-    },
-    quantity: {
-        type: String,
-        required: true
-    }
-})
-
 const userSchema = new Schema({
     username: {
         type: String,
@@ -39,7 +24,17 @@ const userSchema = new Schema({
     },
     cart: {
         type: Map,
-        of: cartItemSchema,
+        of: new Schema({
+                price: Number,
+                description: String,
+                category: {
+                    type: String,
+                    enum: ['book', 'movies', 'music', 'unclassified'],
+                    default: 'unclassified'
+                },
+                picture: String,
+                quantity: Number
+            }), 
         default: {}
     }
 })

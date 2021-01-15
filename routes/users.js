@@ -114,6 +114,12 @@ router.post('/cart-items', async (req, res) => {
             message.message = 'item not found'
             return res.status(400).json(message)
         }
+
+        // make sure quantity is a valid input
+        if (quantity < 0) {
+            message.message = 'invalid value for quantity'
+            return res.status(400).json(message)
+        }
         
         // add it to user's cart
         user.cart.set(itemname, { ...item._doc, 'quantity': quantity }) 

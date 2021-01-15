@@ -123,9 +123,9 @@ router.post('/cart-items', async (req, res) => {
             message.message = 'item not found'
             return res.status(400).json(message)
         }
-        let cartItem = { ...item._doc, 'quantity': quantity }
+        
         // add it to user's cart
-        user.cart.set(itemname, cartItem) 
+        user.cart.set(itemname, { ...item._doc, 'quantity': quantity }) 
         user.save()
         message.message = 'item added'
         message.user = user

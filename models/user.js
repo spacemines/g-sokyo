@@ -25,6 +25,7 @@ const userSchema = new Schema({
     cart: {
         type: Map,
         of: new Schema({
+                itemname: String,
                 price: Number,
                 description: String,
                 category: {

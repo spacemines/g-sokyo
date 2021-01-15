@@ -120,12 +120,6 @@ router.get('/', async (req, res) => {
         console.log('payload', payload)
         console.log('request body', req.body)
 
-        // check admin status
-        if (role != 'admin') {
-            message.message = 'admin role required'
-            return res.status(400).json(message)
-        }
-        
         // check jwt expiration
         if (Date.now() / 1000 > payload.exp) {
             message.message = 'token expired'

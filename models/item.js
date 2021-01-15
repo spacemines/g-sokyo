@@ -11,7 +11,7 @@ const itemSchema = new Schema({
         type: Number,
         required: true,
     },
-    desciption: {
+    description: {
         type: String,
         default: ''
     },

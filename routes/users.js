@@ -134,9 +134,7 @@ router.post('/cart-items', async (req, res) => {
         }
 
         // add it to user's cart
-        let cloneItem = { ...item }
-        cloneItem.quantity = quantity
-        user.cart.set(itemname, cloneItem)
+        user.cart.set(itemname, { Item.price, Item.description, quantity })
         user.save()
         message.message = 'item added'
         message.user = user

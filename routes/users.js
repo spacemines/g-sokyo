@@ -139,8 +139,6 @@ router.post('/cart-items', async (req, res) => {
 router.get('/cart-items', async (req, res) => {
     try {
         message = {}
-        console.log(payload)
-        console.log(req.body)
         const token = req.headers.authorization.split(' ')[1]
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload

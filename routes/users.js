@@ -17,7 +17,8 @@ router.post('/login', async (req, res) => {
 
         // check empty fields
         if (!username || !password) {
-            message.message = 'required fields are missing'
+            message.message = 'required fields are missing. username and password are required to login.'
+            console.log(message)
             return res.status(400).json(message)
         }
         
@@ -25,6 +26,7 @@ router.post('/login', async (req, res) => {
         const user = await User.findOne({ username })
         if (!user) {
             message.message = 'user not found'
+            console.log(message)
             return res.status(400).json(message)
         }
         const role = user.role
@@ -33,6 +35,7 @@ router.post('/login', async (req, res) => {
         const match = await bcrypt.compareSync(password, user.password)
         if (!match) {
             message.message = 'incorrect password'
+            console.log(message)
             return res.status(400).json(message)
         }
 
@@ -59,7 +62,7 @@ router.post('/signup', async (req, res) => {
 
         // check empty fields
         if (!username || !email || !password) {
-            message.message = 'required fields are missing'
+            message.message = 'required fields are missing. username, email, and password are required to sign up.'
             res.status(400).json(message)
         }
         

@@ -99,7 +99,6 @@ router.delete('/:id', async (req, res) => {
             return res.status(400).json(message)
         }
 
-        console.log('item', item)
         message.message = 'item deleted'
         return res.status(200).json(message)
     } catch (err) {
@@ -129,11 +128,9 @@ router.get('/', async (req, res) => {
         const query = req.query
 
         // console log query
-        console.log('query', query)
 
         const items = await Item.find(query)
 
-        console.log('items', items)
         message.message = 'get successful'
         message.items = items
         return res.status(200).json(message)

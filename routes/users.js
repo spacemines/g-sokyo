@@ -198,7 +198,6 @@ router.get('/cart-items/checkout', async (req, res) => {
         user.cart = {}
         user.save()
         message.message = 'checkout success'
-        message.user = user
         return res.status(200).json(message)
     } catch (err) {
         console.log('error', err)

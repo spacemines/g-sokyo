@@ -134,7 +134,7 @@ router.post('/cart-items', async (req, res) => {
         }
 
         // add it to user's cart
-        user.cart.set(itemname, { ...item, quantity })
+        user.cart.set(itemname, { ...item, "quantity": quantity})
         user.save()
         message.message = 'item added'
         message.user = user

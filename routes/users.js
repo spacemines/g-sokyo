@@ -14,8 +14,6 @@ router.post('/login', async (req, res) => {
         message = {}
         const { username, password } = req.body
         
-        console.log('request body', req.body)
-
         // check empty fields
         if (!username || !password) {
             message.message = 'required fields are missing. username and password are required to login.'
@@ -55,9 +53,6 @@ router.post('/signup', async (req, res) => {
         message = {}
         const { username, email, password } = req.body
         
-        // console log the payload
-        console.log('request body', req.body)
-
         // check empty fields
         if (!username || !email || !password) {
             message.message = 'required fields are missing. username, email, and password are required to sign up.'
@@ -96,10 +91,6 @@ router.post('/cart-items', async (req, res) => {
         const token = req.headers.authorization.split(' ')[1]
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload
-
-        // console log payload and request body
-        console.log('payload', payload)
-        console.log('request body', req.body)
 
         // check jwt expiration
         if (Date.now() / 1000 > payload.exp) {
@@ -143,10 +134,6 @@ router.get('/cart-items', async (req, res) => {
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload
 
-        // console log payload and request body
-        console.log('payload', payload)
-        console.log('request body', req.body)
-
         // check jwt expiration
         if (Date.now() / 1000 > payload.exp) {
             message.message = 'token expired'
@@ -176,10 +163,6 @@ router.get('/cart-items/checkout', async (req, res) => {
         const token = req.headers.authorization.split(' ')[1]
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload
-
-        // console log payload and request body
-        console.log('payload', payload)
-        console.log('request body', req.body)
 
         // check jwt expiration 
         if (Date.now() / 1000 > payload.exp) {

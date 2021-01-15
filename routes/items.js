@@ -15,10 +15,6 @@ router.post('/', async (req, res) => {
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload
 
-        // console log payload and request body
-        console.log('payload', payload)
-        console.log('request body', req.body)
-
         // check admin status
         if (role != 'admin') {
             message.message = 'admin role required'
@@ -71,10 +67,6 @@ router.delete('/:id', async (req, res) => {
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload
 
-        // console log payload and request body
-        console.log('payload', payload)
-        console.log('request body', req.body)
-       
         // check admin status
         if (role != 'admin') {
             message.message = 'admin role required'
@@ -89,9 +81,6 @@ router.delete('/:id', async (req, res) => {
 
         const item_id = req.params.id
         
-        // console log id
-        console.log('item id', item_id)
-
         // find item and delete
         const item = await Item.findByIdAndRemove(item_id, req.body)
         if (!item) {
@@ -115,10 +104,6 @@ router.get('/', async (req, res) => {
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload
 
-        // console log payload and request body
-        console.log('payload', payload)
-        console.log('request body', req.body)
-
         // check jwt expiration
         if (Date.now() / 1000 > payload.exp) {
             message.message = 'token expired'
@@ -126,9 +111,7 @@ router.get('/', async (req, res) => {
         }
         
         const query = req.query
-
-        // console log query
-
+        
         const items = await Item.find(query)
 
         message.message = 'get successful'

@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 const User = require('../models/user')
+const Item = require('../models/item')
 
 const router = express.Router()
 const secret = process.env.SECRET_KEY
@@ -92,7 +93,7 @@ router.post('/signup', async (req, res) => {
     }
 })
 
-router.post('/:id/cart-items', async (req, res) => {
+router.post('/cart-items', async (req, res) => {
     try {
         message = {}
         const token = req.headers.authorization.split(' ')[1]
@@ -102,12 +103,6 @@ router.post('/:id/cart-items', async (req, res) => {
         // console log payload and request body
         console.log('payload', payload)
         console.log('request body', req.body)
-
-        // check valid jwt username match
-        if (req.body.username && req.body.username !== username) {
-            message.message = 'invalid username'
-            return res.status(400).json(message)
-        }
 
         // check admin status
         if (role != 'admin') {
@@ -121,20 +116,111 @@ router.post('/:id/cart-items', async (req, res) => {
             return res.status(400).json(message)
         }
 
-        const user_id = req.params.id
-
-        // console log user id
-        console.log('user id', user_id)
-
         // make sure user exists
-        const user = User.findById(user_id)
+        const user = await User.findOne({ username })
         if (!user) {
             message.message = 'user not found'
             return res.status(400).json(message)
         }
 
         // process item and quantity
+        const { itemname, quantity } = req.body
+        
+        // make sure item exists
+        const item = await Item.findOne({ itemname })
+        if (!item) {
+            message.message = 'item not found'
+            return res.status(400).json(message)
+        }
+
         // add it to user's cart
+        user.cart.set(itemname, quantity)
+        user.save()
+        message.message = 'item added'
+        message.user = user
+        return res.status(200).json(message)
+    } catch (err) {
+        console.log('error', err)
+        res.status(400).end()
+    }
+})
+
+router.get('/cart-items', async (req, res) => {
+    try {
+        message = {}
+        const token = req.headers.authorization.split(' ')[1]
+        const payload = jwt.verify(token, process.env.SECRET_KEY)
+        const { username, role } = payload
+
+        // console log payload and request body
+        console.log('payload', payload)
+        console.log('request body', req.body)
+
+        // check admin status
+        if (role != 'admin') {
+            message.message = 'admin role required'
+            return res.status(400).json(message)
+        }
+
+        // check jwt expiration
+        if (Date.now() / 1000 > payload.exp) {
+            message.message = 'token expired'
+            return res.status(400).json(message)
+        }
+
+        // make sure user exists
+        const user = await User.findOne({ username })
+        if (!user) {
+            message.message = 'user not found'
+            return res.status(400).json(message)
+        }
+
+        // show user cart
+        message.message = 'get successful'
+        message.cart = user.cart
+        return res.status(200).json(message)
+    } catch (err) {
+        console.log('error', err)
+        res.status(400).end()
+    }
+})
+
+router.get('/cart-items/checkout', async (req, res) => {
+    try {
+        message = {}
+        const token = req.headers.authorization.split(' ')[1]
+        const payload = jwt.verify(token, process.env.SECRET_KEY)
+        const { username, role } = payload
+
+        // console log payload and request body
+        console.log('payload', payload)
+        console.log('request body', req.body)
+
+        // check admin status
+        if (role != 'admin') {
+            message.message = 'admin role required'
+            return res.status(400).json(message)
+        }
+
+        // check jwt expiration 
+        if (Date.now() / 1000 > payload.exp) {
+            message.message = 'token expired'
+            return res.status(400).json(message)
+        }
+
+        // make sure user exists
+        const user = await User.findOne({ username })
+        if (!user) {
+            message.message = 'user not found'
+            return res.status(400).json(message)
+        }
+
+        // reset user cart
+        user.cart = {}
+        user.save()
+        message.message = 'checkout success'
+        message.user = user
+        return res.status(200).json(message)
     } catch (err) {
         console.log('error', err)
         res.status(400).end()

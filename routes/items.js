@@ -18,12 +18,6 @@ router.post('/', async (req, res) => {
         // console log payload and request body
         console.log('payload', payload)
         console.log('request body', req.body)
-       
-        // check valid jwt username match
-        if (req.body.username && req.body.username !== username) {
-            message.message = 'invalid username'
-            return res.status(400).json(message)
-        }
 
         // check admin status
         if (role != 'admin') {
@@ -81,12 +75,6 @@ router.delete('/:id', async (req, res) => {
         console.log('payload', payload)
         console.log('request body', req.body)
        
-        // check valid jwt username match
-        if (req.body.username && req.body.username !== username) {
-            message.message = 'invalid username'
-            return res.status(400).json(message)
-        }
-
         // check admin status
         if (role != 'admin') {
             message.message = 'admin role required'
@@ -132,12 +120,12 @@ router.get('/', async (req, res) => {
         console.log('payload', payload)
         console.log('request body', req.body)
 
-        // check valid jwt username match
-        if (req.body.username && req.body.username !== username) {
-            message.message = 'invalid username'
+        // check admin status
+        if (role != 'admin') {
+            message.message = 'admin role required'
             return res.status(400).json(message)
         }
-
+        
         // check jwt expiration
         if (Date.now() / 1000 > payload.exp) {
             message.message = 'token expired'

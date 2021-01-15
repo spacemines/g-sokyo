@@ -104,12 +104,6 @@ router.post('/cart-items', async (req, res) => {
         console.log('payload', payload)
         console.log('request body', req.body)
 
-        // check admin status
-        if (role != 'admin') {
-            message.message = 'admin role required'
-            return res.status(400).json(message)
-        }
-
         // check jwt expiration
         if (Date.now() / 1000 > payload.exp) {
             message.message = 'token expired'
@@ -156,12 +150,6 @@ router.get('/cart-items', async (req, res) => {
         console.log('payload', payload)
         console.log('request body', req.body)
 
-        // check admin status
-        if (role != 'admin') {
-            message.message = 'admin role required'
-            return res.status(400).json(message)
-        }
-
         // check jwt expiration
         if (Date.now() / 1000 > payload.exp) {
             message.message = 'token expired'
@@ -195,12 +183,6 @@ router.get('/cart-items/checkout', async (req, res) => {
         // console log payload and request body
         console.log('payload', payload)
         console.log('request body', req.body)
-
-        // check admin status
-        if (role != 'admin') {
-            message.message = 'admin role required'
-            return res.status(400).json(message)
-        }
 
         // check jwt expiration 
         if (Date.now() / 1000 > payload.exp) {

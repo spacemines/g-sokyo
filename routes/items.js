@@ -100,12 +100,10 @@ router.delete('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         message = {}
-        console.log(req.headers)
         const token = req.headers.authorization.split(' ')[1]
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload
 
-        console.log(token, payload)
         // check jwt expiration
         if (Date.now() / 1000 > payload.exp) {
             message.message = 'token expired'

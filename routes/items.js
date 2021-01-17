@@ -14,8 +14,7 @@ router.post('/', async (req, res) => {
         const token = req.headers.authorization.split(' ')[1]
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload
-        console.log('req.body', req.body)
-        console.log('payload', payload)
+
         // check admin status
         if (role != 'admin') {
             message.message = 'admin role required'
@@ -100,7 +99,6 @@ router.delete('/:id', async (req, res) => {
 // endpoint to get items, default is all items but able to query
 router.get('/', async (req, res) => {
     try {
-        console.log('req.body', req.body)
         message = {}
         const token = req.headers.authorization.split(' ')[1]
         const payload = jwt.verify(token, process.env.SECRET_KEY)

@@ -30,7 +30,7 @@ const userSchema = new Schema({
                 description: String,
                 category: {
                     type: String,
-                    enum: ['book', 'movies', 'music', 'object', 'misc'],
+                    enum: ['book', 'movies', 'music', 'object', 'misc', 'unclassified'],
                     default: 'misc'
                 },
                 picture: String,

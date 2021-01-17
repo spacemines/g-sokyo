@@ -104,6 +104,7 @@ router.get('/', async (req, res) => {
         const payload = jwt.verify(token, process.env.SECRET_KEY)
         const { username, role } = payload
 
+        console.log(token, payload)
         // check jwt expiration
         if (Date.now() / 1000 > payload.exp) {
             message.message = 'token expired'

@@ -99,6 +99,7 @@ router.delete('/:id', async (req, res) => {
 // endpoint to get items, default is all items but able to query
 router.get('/', async (req, res) => {
     try {
+        console.log(req)
         message = {}
         const token = req.headers.authorization.split(' ')[1]
         const payload = jwt.verify(token, process.env.SECRET_KEY)
